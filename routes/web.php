@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\admin\DashboardController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Auth
+Auth::routes();
+
 Route::get('/', function () {
-    return view('pages.backend.dashboard');
+    return view('welcome');
 });
+
+Route::middleware(['auth','admin'])->group(function(){    
+    Route::get('/admin', [DashboardController::class,'index'])->name('admin.dashboard');   
+});
+
